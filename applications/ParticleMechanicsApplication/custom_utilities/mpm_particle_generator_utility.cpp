@@ -388,6 +388,8 @@ namespace MPMParticleGeneratorUtility
                             p_condition->SetValuesOnIntegrationPoints(MPC_COORD, mpc_xg , process_info);
                             p_condition->SetValuesOnIntegrationPoints(MPC_AREA, mpc_area, process_info);
                             p_condition->SetValuesOnIntegrationPoints(POINT_LOAD, { point_load }, process_info);
+                            // Mark as boundary condition
+                            p_condition->Set(BOUNDARY, true);
                             
 
                             // Add the MP Condition to the model part
@@ -439,6 +441,8 @@ namespace MPMParticleGeneratorUtility
                                 p_condition->SetValuesOnIntegrationPoints(MPC_IMPOSED_VELOCITY, { mpc_imposed_velocity }, process_info);
                                 p_condition->SetValuesOnIntegrationPoints(MPC_ACCELERATION, { mpc_acceleration }, process_info);
                                 p_condition->SetValuesOnIntegrationPoints(MPC_IMPOSED_ACCELERATION, { mpc_imposed_acceleration }, process_info);
+                                // Mark as boundary condition
+                                p_condition->Set(BOUNDARY, true);
 
                                 if (boundary_condition_type == 1)
                                 {
@@ -751,12 +755,18 @@ namespace MPMParticleGeneratorUtility
 
     void GetIntegrationPointArea(const GeometryType& rGeom, const IntegrationMethod IntegrationMethod, Vector& rIntVolumes)
     {
-        const double area = rGeom.Area();
         auto int_points = rGeom.IntegrationPoints(IntegrationMethod);
         if (rIntVolumes.size() != int_points.size()) rIntVolumes.resize(int_points.size(),false);
+        
+        // Computing the Jacobian
+        Vector jac_vec(int_points.size());
+        rGeom.DeterminantOfJacobian(jac_vec,IntegrationMethod);
+        
         for (size_t i = 0; i < int_points.size(); ++i) {
-            rIntVolumes[i] = area * 0.5 * int_points[i].Weight();
+            rIntVolumes[i] = jac_vec[i] * int_points[i].Weight();
+            
         }
+        
     }
 
     void DetermineIntegrationMethodAndShapeFunctionValues(const GeometryType& rGeom, const SizeType ParticlesPerElement,
