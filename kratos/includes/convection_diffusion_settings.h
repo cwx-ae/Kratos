@@ -549,6 +549,19 @@ private:
         //     rSerializer.save("ReactionVar",mpReactionVar);
         // }
 
+        KRATOS_WATCH(mis_defined_DensityVar)
+        KRATOS_WATCH(mis_defined_DiffusionVar)
+        KRATOS_WATCH(mis_defined_UnknownVar)
+        KRATOS_WATCH(mis_defined_VolumeSourceVar)
+        KRATOS_WATCH(mis_defined_SurfaceSourceVar)
+        KRATOS_WATCH(mis_defined_ProjectionVar)
+        KRATOS_WATCH(mis_defined_ConvectionVar)
+        KRATOS_WATCH(mis_defined_MeshVelocityVar)
+        KRATOS_WATCH(mis_defined_TransferCoefficientVar)
+        KRATOS_WATCH(mis_defined_VelocityVar)
+        KRATOS_WATCH(mis_defined_SpecificHeatVar)
+        KRATOS_WATCH(mis_defined_ReactionVar)
+
         rSerializer.save("mis_defined_DensityVar",mis_defined_DensityVar);
         rSerializer.save("mis_defined_DiffusionVar",mis_defined_DiffusionVar);
         rSerializer.save("mis_defined_UnknownVar",mis_defined_UnknownVar);
@@ -640,18 +653,39 @@ private:
         //     rSerializer.load("ReactionVar",mpReactionVar);
         // }
 
+        KRATOS_WATCH("#######")
+        KRATOS_WATCH("#######")
+        KRATOS_WATCH("#######")
+        KRATOS_WATCH("#######")
+        KRATOS_WATCH("#######")
+
+
         rSerializer.load("mis_defined_DensityVar",mis_defined_DensityVar);
+        KRATOS_WATCH(mis_defined_DensityVar)
         rSerializer.load("mis_defined_DiffusionVar",mis_defined_DiffusionVar);
+        KRATOS_WATCH(mis_defined_DiffusionVar)
         rSerializer.load("mis_defined_UnknownVar",mis_defined_UnknownVar);
+        KRATOS_WATCH(mis_defined_UnknownVar)
         rSerializer.load("mis_defined_VolumeSourceVar",mis_defined_VolumeSourceVar);
+        KRATOS_WATCH(mis_defined_VolumeSourceVar)
         rSerializer.load("mis_defined_SurfaceSourceVar",mis_defined_SurfaceSourceVar);
+        KRATOS_WATCH(mis_defined_SurfaceSourceVar)
         rSerializer.load("mis_defined_ProjectionVar",mis_defined_ProjectionVar);
+        KRATOS_WATCH(mis_defined_ProjectionVar)
         rSerializer.load("mis_defined_ConvectionVar",mis_defined_ConvectionVar);
+        KRATOS_WATCH(mis_defined_ConvectionVar)
         rSerializer.load("mis_defined_MeshVelocityVar",mis_defined_MeshVelocityVar);
+        KRATOS_WATCH(mis_defined_MeshVelocityVar)
         rSerializer.load("mis_defined_TransferCoefficientVar",mis_defined_TransferCoefficientVar);
+        KRATOS_WATCH(mis_defined_TransferCoefficientVar)
         rSerializer.load("mis_defined_VelocityVar",mis_defined_VelocityVar);
+        KRATOS_WATCH(mis_defined_VelocityVar)
         rSerializer.load("mis_defined_SpecificHeatVar",mis_defined_SpecificHeatVar);
+        KRATOS_WATCH(mis_defined_SpecificHeatVar)
         rSerializer.load("mis_defined_ReactionVar",mis_defined_ReactionVar);
+        KRATOS_WATCH(mis_defined_ReactionVar)
+
+        KRATOS_WATCH("is defined load")
 
         if(mis_defined_DensityVar) {
             rSerializer.load("DensityVar",mpDensityVar);
