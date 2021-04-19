@@ -451,6 +451,7 @@ private:
 
     virtual void save(Serializer& rSerializer) const
     {
+        // Save the is defined bool flag for each variable
         rSerializer.save("mis_defined_DensityVar",mis_defined_DensityVar);
         rSerializer.save("mis_defined_DiffusionVar",mis_defined_DiffusionVar);
         rSerializer.save("mis_defined_UnknownVar",mis_defined_UnknownVar);
@@ -464,52 +465,49 @@ private:
         rSerializer.save("mis_defined_SpecificHeatVar",mis_defined_SpecificHeatVar);
         rSerializer.save("mis_defined_ReactionVar",mis_defined_ReactionVar);
 
+        // Save the variable names
+        // Note that the variable class save method only saves the name of the variables
         if (mpDensityVar != nullptr && mis_defined_DensityVar) {
-            rSerializer.save("DensityVar",mpDensityVar);
+            rSerializer.save("DensityVarName",mpDensityVar);
         }
         if (mpDiffusionVar != nullptr && mis_defined_DiffusionVar) {
-            rSerializer.save("DiffusionVar",mpDiffusionVar);
+            rSerializer.save("DiffusionVarName",mpDiffusionVar);
         }
         if (mpUnknownVar != nullptr && mis_defined_UnknownVar) {
-            rSerializer.save("UnknownVar",mpUnknownVar);
+            rSerializer.save("UnknownVarName",mpUnknownVar);
         }
         if (mpVolumeSourceVar != nullptr && mis_defined_VolumeSourceVar) {
-            rSerializer.save("VolumeSourceVar",mpVolumeSourceVar);
+            rSerializer.save("VolumeSourceVarName",mpVolumeSourceVar);
         }
         if (mpSurfaceSourceVar != nullptr && mis_defined_SurfaceSourceVar) {
-            rSerializer.save("SurfaceSourceVar",mpSurfaceSourceVar);
+            rSerializer.save("SurfaceSourceVarName",mpSurfaceSourceVar);
         }
         if (mpProjectionVar != nullptr && mis_defined_ProjectionVar) {
-            rSerializer.save("ProjectionVar",mpProjectionVar);
+            rSerializer.save("ProjectionVarName",mpProjectionVar);
         }
         if (mpConvectionVar != nullptr && mis_defined_ConvectionVar) {
-            rSerializer.save("ConvectionVar",mpConvectionVar);
+            rSerializer.save("ConvectionVarName",mpConvectionVar);
         }
         if (mpMeshVelocityVar != nullptr && mis_defined_MeshVelocityVar) {
-            rSerializer.save("MeshVelocityVar",mpMeshVelocityVar);
+            rSerializer.save("MeshVelocityVarName",mpMeshVelocityVar);
         }
         if (mpTransferCoefficientVar != nullptr && mis_defined_TransferCoefficientVar) {
-            rSerializer.save("TransferCoefficientVar",mpTransferCoefficientVar);
+            rSerializer.save("TransferCoefficientVarName",mpTransferCoefficientVar);
         }
         if (mpVelocityVar != nullptr && mis_defined_VelocityVar) {
-            rSerializer.save("VelocityVar",mpVelocityVar);
+            rSerializer.save("VelocityVarName",mpVelocityVar);
         }
         if (mpSpecificHeatVar != nullptr && mis_defined_SpecificHeatVar) {
-            rSerializer.save("SpecificHeatVar",mpSpecificHeatVar);
+            rSerializer.save("SpecificHeatVarName",mpSpecificHeatVar);
         }
         if (mpReactionVar != nullptr && mis_defined_ReactionVar) {
-            rSerializer.save("ReactionVar",mpReactionVar);
+            rSerializer.save("ReactionVarName",mpReactionVar);
         }
     }
 
     virtual void load(Serializer& rSerializer)
     {
-        KRATOS_WATCH("#######")
-        KRATOS_WATCH("#######")
-        KRATOS_WATCH("#######")
-        KRATOS_WATCH("#######")
-        KRATOS_WATCH("#######")
-
+        // Load the is defined bool flags for each variable
         rSerializer.load("mis_defined_DensityVar",mis_defined_DensityVar);
         rSerializer.load("mis_defined_DiffusionVar",mis_defined_DiffusionVar);
         rSerializer.load("mis_defined_UnknownVar",mis_defined_UnknownVar);
@@ -523,43 +521,67 @@ private:
         rSerializer.load("mis_defined_SpecificHeatVar",mis_defined_SpecificHeatVar);
         rSerializer.load("mis_defined_ReactionVar",mis_defined_ReactionVar);
 
-        KRATOS_WATCH("is defined(s) load")
-
+        // If the variables are defined, load their name
+        // Note that only the name has been saved to retrieve the already existent variable from the KratosComponents
         if(mis_defined_DensityVar) {
-            rSerializer.load("DensityVar",mpDensityVar);
+            std::string density_var_name;
+            rSerializer.load("DensityVarName", density_var_name);
+            mpDensityVar = &(KratosComponents<Variable<double>>::Get(density_var_name));
         }
         if(mis_defined_DiffusionVar) {
-            rSerializer.load("DiffusionVar",mpDiffusionVar);
+            std::string diffusion_var_name;
+            rSerializer.load("DiffusionVarName", diffusion_var_name);
+            mpDiffusionVar = &(KratosComponents<Variable<double>>::Get(diffusion_var_name));
         }
         if(mis_defined_UnknownVar) {
-            rSerializer.load("UnknownVar",mpUnknownVar);
+            std::string unknown_var_name;
+            rSerializer.load("UnknownVarName", unknown_var_name);
+            mpUnknownVar = &(KratosComponents<Variable<double>>::Get(unknown_var_name));
         }
         if(mis_defined_VolumeSourceVar) {
-            rSerializer.load("VolumeSourceVar",mpVolumeSourceVar);
+            std::string volume_source_var_name;
+            rSerializer.load("VolumeSourceVarName", volume_source_var_name);
+            mpVolumeSourceVar = &(KratosComponents<Variable<double>>::Get(volume_source_var_name));
         }
         if(mis_defined_SurfaceSourceVar) {
-            rSerializer.load("SurfaceSourceVar",mpSurfaceSourceVar);
+            std::string surface_source_var_name;
+            rSerializer.load("SurfaceSourceVarName", surface_source_var_name);
+            mpSurfaceSourceVar = &(KratosComponents<Variable<double>>::Get(surface_source_var_name));
         }
         if(mis_defined_ProjectionVar) {
-            rSerializer.load("ProjectionVar",mpProjectionVar);
+            std::string projection_var_name;
+            rSerializer.load("ProjectionVarName", projection_var_name);
+            mpProjectionVar = &(KratosComponents<Variable<double>>::Get(projection_var_name));
         }
         if(mis_defined_ConvectionVar) {
-            rSerializer.load("ConvectionVar",mpConvectionVar);
+            std::string convection_var_name;
+            rSerializer.load("ConvectionVarName", convection_var_name);
+            mpConvectionVar = &(KratosComponents<Variable<array_1d<double,3>>>::Get(convection_var_name));
         }
         if(mis_defined_MeshVelocityVar) {
-            rSerializer.load("MeshVelocityVar",mpMeshVelocityVar);
+            std::string mesh_velocity_var;
+            rSerializer.load("MeshVelocityVarName", mesh_velocity_var);
+            mpMeshVelocityVar = &(KratosComponents<Variable<array_1d<double,3>>>::Get(mesh_velocity_var));
         }
         if(mis_defined_TransferCoefficientVar) {
-            rSerializer.load("TransferCoefficientVar",mpTransferCoefficientVar);
+            std::string transfer_coefficient_var_name;
+            rSerializer.load("TransferCoefficientVarName", transfer_coefficient_var_name);
+            mpTransferCoefficientVar = &(KratosComponents<Variable<double>>::Get(transfer_coefficient_var_name));
         }
         if(mis_defined_VelocityVar) {
-            rSerializer.load("VelocityVar",mpVelocityVar);
+            std::string velocity_var_name;
+            rSerializer.load("VelocityVarName", velocity_var_name);
+            mpVelocityVar = &(KratosComponents<Variable<array_1d<double,3>>>::Get(velocity_var_name));
         }
         if(mis_defined_SpecificHeatVar) {
-            rSerializer.load("SpecificHeatVar",mpSpecificHeatVar);
+            std::string specific_heat_var_name;
+            rSerializer.load("SpecificHeatVarName", specific_heat_var_name);
+            mpSpecificHeatVar = &(KratosComponents<Variable<double>>::Get(specific_heat_var_name));
         }
         if(mis_defined_ReactionVar) {
-            rSerializer.load("ReactionVar",mpReactionVar);
+            std::string reaction_var_name;
+            rSerializer.load("ReactionVarName", reaction_var_name);
+            mpReactionVar = &(KratosComponents<Variable<double>>::Get(reaction_var_name));
         }
     }
 
